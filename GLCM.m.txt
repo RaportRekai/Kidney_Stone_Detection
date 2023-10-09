@@ -1,0 +1,34 @@
+clc
+features_1 = [];
+srcFile = dir("C:\Users\danma\Downloads\archive\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\Stone\*.jpg");
+for i=1:length(srcFile)
+    filename = strcat("C:\Users\danma\Downloads\archive\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\Stone\",srcFile(i).name);
+    Input = imread(filename);
+    gray  =rgb2gray (Input);
+    glcm = graycomatrix(gray);
+    stats = graycoprops (glcm);
+    Contrast = stats.Contrast;
+    Correlation = stats.Correlation;
+    Energy = stats.Energy;
+    Homogeneity = stats.Homogeneity;
+    features_1 = [features_1;Contrast Correlation Energy Homogeneity 1];
+    
+end
+features_1 = [features_1;0 0 0 0 0];
+srcFile = dir("C:\Users\danma\Downloads\archive\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\Normal\*.jpg");
+for i=1:length(srcFile)
+    filename = strcat("C:\Users\danma\Downloads\archive\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone\Normal\",srcFile(i).name);
+    Input = imread(filename);
+    gray  =rgb2gray (Input);
+    glcm = graycomatrix(gray);
+    stats = graycoprops (glcm);
+    Contrast = stats.Contrast;
+    Correlation = stats.Correlation;
+    Energy = stats.Energy;
+    Homogeneity = stats.Homogeneity;
+    features_1 = [features_1;Contrast Correlation Energy Homogeneity 0];
+    
+end
+writematrix(features_1,'M2.csv'); 
+
+
